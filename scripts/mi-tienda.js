@@ -186,19 +186,31 @@ document.getElementById("botonFinalizarCompra").addEventListener("click", () => 
 
 
 function agregarPrenda(array) {
-    const nuevaPrenda = new Prenda(
-        array.length + 1,
-        document.getElementById("prendaInput").value,
-        document.getElementById("talleInput").value,
-        parseInt(document.getElementById("precioInput").value),
-        "img/REMERA-REGULAR.jpg"
-    );
-    array.push(nuevaPrenda);
-    prenda.value = "";
-    talle.value = "";
-    precio.value = "";
-    localStorage.setItem("estanteria", JSON.stringify(estanteria));
+    const prendaInput = document.getElementById("prendaInput");
+    const talleInput = document.getElementById("talleInput");
+    const precioInput = document.getElementById("precioInput");
+    const imagenInput = document.getElementById("imagenInput");
+
+    if (prendaInput.value && talleInput.value && precioInput.value && imagenInput.files.length > 0) {
+        const nuevaPrenda = new Prenda(
+            array.length + 1,
+            prendaInput.value,
+            talleInput.value,
+            parseInt(precioInput.value),
+            imagenInput.files[0].name  
+        );
+        array.push(nuevaPrenda);
+        prendaInput.value = "";
+        talleInput.value = "";
+        precioInput.value = "";
+        imagenInput.value = "";  
+        localStorage.setItem("estanteria", JSON.stringify(estanteria));
+        mostrarCatalogoDOM(estanteria);
+    } else {
+        alert("Por favor, complete todos los campos, incluyendo la imagen.");
+    }
 }
+
 
 function ordenarMayorMenor(array) {
     let arrayMayorMenor = array.concat();
