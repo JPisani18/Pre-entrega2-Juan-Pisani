@@ -1,0 +1,45 @@
+[
+    {
+      "id": 1,
+      "prenda": "Remera Oversize",
+      "talle": "XL",
+      "precio": 5800,
+      "imagen": "REMERA-OVERSIZE.webp"
+    },
+    {
+      "id": 2,
+      "prenda": "Remera Regular",
+      "talle": "L",
+      "precio": 5500,
+      "imagen": "REMERA-REGULAR.webp"
+    },
+    {
+      "id": 3,
+      "prenda": "Camisa",
+      "talle": "L",
+      "precio": 4800,
+      "imagen": "camisa.webp"
+    },
+    {
+      "id": 4,
+      "prenda": "Pantalón Cargo",
+      "talle": "40",
+      "precio": 14000,
+      "imagen": "pantalon-cargo.webp"
+    },
+    {
+      "id": 5,
+      "prenda": "Pantalón Jogging",
+      "talle": "42",
+      "precio": 12500,
+      "imagen": "pantalón-joggin.webp"
+    },
+    {
+      "id": 6,
+      "prenda": "Pantalón Corto",
+      "talle": "40",
+      "precio": 8000,
+      "imagen": "pantalón-corto.webp"
+    }
+  ]
+  

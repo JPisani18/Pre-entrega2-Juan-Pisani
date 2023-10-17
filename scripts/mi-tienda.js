@@ -15,13 +15,18 @@ class Prenda {
         console.log(this.id, this.prenda, this.talle, this.precio);
     }
 }
-const prenda1 = new Prenda(1, "Remera Oversize", "XL", 5800, "REMERA-OVERSIZE.webp");
-const prenda2 = new Prenda(2, "Remera Regular", "L", 5500, "REMERA-REGULAR.webp");
-const prenda3 = new Prenda(3, "Camisa", "L", 4800, "camisa.webp");
-const prenda4 = new Prenda(4, "Pantalón Cargo", "40", 14000, "pantalon-cargo.webp");
-const prenda5 = new Prenda(5, "Pantalón joggin", "42", 12500, "pantalón-joggin.webp");
-const prenda6 = new Prenda(6, "Pantalón corto", "40", 8000, "pantalón-corto.webp");
+let estanteria = []; 
 
+
+fetch('productos.json')
+    .then((response) => response.json())
+    .then((data) => {
+        estanteria = data;
+        mostrarCatalogoDOM(estanteria); 
+    })
+    .catch((error) => {
+        console.error('Error al cargar productos:', error);
+    });
 // DOM
 let containerPrendas = document.getElementById("prendas");
 let formCargarPrenda = document.getElementById("formCargarPrenda");
@@ -35,7 +40,6 @@ let precioTotal = document.getElementById("precioTotal");
 let prenda = document.getElementById("prendaInput");
 let talle = document.getElementById("talleInput");
 let precio = document.getElementById("precioInput");
-let estanteria = [prenda1, prenda2, prenda3, prenda4, prenda5, prenda6];
 let productosCarrito = cargarDatosDesdeLocalStorage("carrito") || [];
 
 // FUNCTIONS:
@@ -49,7 +53,7 @@ function cargarDatosDesdeLocalStorage(clave) {
     }
 }
 
-// Función para guardar datos en localStorage
+
 function guardarDatosEnLocalStorage(clave, datos) {
     try {
         localStorage.setItem(clave, JSON.stringify(datos));
@@ -161,8 +165,15 @@ function calcularTotal(array) {
     totalReduce > 0 ? (precioTotal.innerHTML = `<strong>El total de su compra es: $${totalReduce}</strong>`) : (precioTotal.innerHTML = `No hay productos en el carrito`);
 }
 
+function limpiarCarrito() {
+    productosCarrito = []; 
+    guardarDatosEnLocalStorage('carrito', productosCarrito); 
+    cargarProductosCarrito(productosCarrito); 
+}
+
+
 document.getElementById("botonFinalizarCompra").addEventListener("click", () => {
-    // Lógica para finalizar la compra, calcular el total, etc.
+    
 
     Swal.fire({
         title: 'Compra Finalizada',
@@ -170,6 +181,7 @@ document.getElementById("botonFinalizarCompra").addEventListener("click", () => 
         icon: 'success',
         confirmButtonText: 'Aceptar'
     });
+    limpiarCarrito();
 });
 
 
