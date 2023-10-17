@@ -4,12 +4,25 @@
     box-sizing: border-box;
 }
 .darkMode{
-    color:white;
-    background-color: black;
+    color:black;
+    background-color: rgb(84, 80, 80);
 }
 .darkMode .card {
     color: black
 }
 .oferta{
     color: goldenrod;
+}
+
+.contacto-float {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 999;
+    background: url('./assets/phone-solid.webp') no-repeat center center;
+    background-size: contain; 
+    width: 50px; 
+    height: 50px; 
+    border: none; 
+    cursor: pointer;
 }

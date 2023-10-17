@@ -86,13 +86,30 @@ function mostrarCatalogoDOM(array) {
 function agregarAlCarrito(elemento) {
     let prendaAgregada = productosCarrito.find((prenda) => prenda.id == elemento.id);
 
-    prendaAgregada == undefined ?
-        (productosCarrito.push(elemento),
-
-            localStorage.setItem("carrito", JSON.stringify(productosCarrito)),
-            console.log(productosCarrito)) :
-        console.log(`La prenda seleccionada ${elemento.prenda} ya existe en el carrito`);
+    if (prendaAgregada === undefined) {
+        productosCarrito.push(elemento);
+        localStorage.setItem("carrito", JSON.stringify(productosCarrito));
+        // Mostrar SweetAlert para producto agregado
+        Swal.fire({
+            title: '¡Producto Agregado!',
+            text: `Has agregado ${elemento.prenda} al carrito.`,
+            icon: 'success',
+            confirmButtonText: 'Continuar'
+        });
+        // Luego puedes actualizar la vista del carrito, si es necesario
+        mostrarProductosEnCarrito();
+    } else {
+        // Mostrar SweetAlert para producto repetido
+        Swal.fire({
+            title: 'Producto Repetido',
+            text: `La prenda seleccionada ${elemento.prenda} ya existe en el carrito.`,
+            icon: 'info',
+            confirmButtonText: 'Continuar'
+        });
+    }
 }
+
+
 
 function cargarProductosCarrito(array) {
     modalBodyCarrito.innerHTML = "";
@@ -123,15 +140,17 @@ function cargarProductosCarrito(array) {
 }
 
 function eliminarProductoCarrito(id) {
-    const productoEliminar = productosCarrito.find((producto) => producto.id === id);
-    if (productoEliminar) {
-        productosCarrito = productosCarrito.filter((producto) => producto.id !== id);
+    const productoEliminarIndex = productosCarrito.findIndex((producto) => producto.id === id);
+
+    if (productoEliminarIndex !== -1) {
+        productosCarrito.splice(productoEliminarIndex, 1);
         guardarDatosEnLocalStorage('carrito', productosCarrito);
         cargarProductosCarrito(productosCarrito);
     } else {
         console.error(`El producto con ID ${id} no existe en el carrito.`);
     }
 }
+
 function calcularTotal(array) {
     const totalReduce = array.reduce(
         (acumulador, prenda) => {
@@ -141,6 +160,18 @@ function calcularTotal(array) {
     );
     totalReduce > 0 ? (precioTotal.innerHTML = `<strong>El total de su compra es: $${totalReduce}</strong>`) : (precioTotal.innerHTML = `No hay productos en el carrito`);
 }
+
+document.getElementById("botonFinalizarCompra").addEventListener("click", () => {
+    // Lógica para finalizar la compra, calcular el total, etc.
+
+    Swal.fire({
+        title: 'Compra Finalizada',
+        text: '¡Gracias por tu compra! Tu pedido ha sido procesado con éxito.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
+});
+
 
 function agregarPrenda(array) {
     const nuevaPrenda = new Prenda(
@@ -234,3 +265,15 @@ botonCarrito.addEventListener("click", () => {
 });
 
 mostrarCatalogoDOM(estanteria);
+
+// sweetalert
+const btn = document.querySelector('#myBtn')
+btn.addEventListener('click', () => {
+
+    Swal.fire({
+        title: 'Contactanos',
+        text: 'Tel: 000-000000 Ig: juan._pisani', 
+        icon: 'success',
+        confirmButtonText: 'Gracias por su visita'
+})
+})
